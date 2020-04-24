@@ -13,18 +13,19 @@ with open(class_name + ".java", "w") as file:
     for property in enumerate(properties):
         line = line + str(property[1].split()[0]) + ", "
     line = line[:-2] + ">"
-    file.write("class " + class_name + line + " {\n")
+    file.write("public class " + class_name + line + " {\n")
     for property in properties:
         file.write("    private " + property + ";\n")
     file.write("\n")
     for property in enumerate(properties):
         type = property[1].split()[0]
         property_name = property[1].split()[1]
-        file.write("    public " + type + " get" + property_name.title() + "() {\n")
+        method_name = "%s%s" % (property_name[0].upper(), property_name[1:])
+        file.write("    public " + type + " get" + method_name + "() {\n")
         file.write("        return this.f" + str(property[0]) + ";\n")
         file.write("    }\n\n")
 
-        file.write("    public set" + property_name.title() + "(" + type + " " + property_name + ") {\n")
+        file.write("    public void set" + method_name + "(" + type + " " + property_name + ") {\n")
         file.write("        this.f" + str(property[0]) + " = " + property_name + ";\n")
         file.write("    }\n\n")
     file.write("}")
